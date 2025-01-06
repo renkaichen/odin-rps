@@ -23,5 +23,61 @@
             return prompt("Rock, paper, or scissors?").toLowerCase();
         }
 
+        function playRound(humanChoice, computerChoice) {
+            let winMessage;
+            switch(computerChoice) {
+                case "rock":
+                    switch(humanChoice) {
+                        case "rock":
+                            console.log("It's a tie! {humanChoice} ties with {computerChoice}");
+                            return;
+                        case "scissors": 
+                            won = false;
+                            break;
+                        case "paper":
+                            won = true;
+                            break;
+                    }
+                case "paper":
+                    switch(humanChoice) {
+                        case "rock":
+                            won = false;
+                            break;
+                        case "scissors": 
+                            won = true;
+                            break;
+                        case "paper":
+                            console.log(`It's a tie! ${humanChoice} ties with ${computerChoice}`);
+                            return;
+                    }
+                case "scissors":
+                    switch(humanChoice) {
+                        case "rock":
+                            won = true;
+                            break;
+                        case "scissors": 
+                            console.log(`It's a tie! ${humanChoice} ties with ${computerChoice}`);
+                            return;
+                        case "paper":
+                            won = false;
+                            break;
+                    }
+            }   
+            if (won) {
+                message = `You win! ${humanChoice} beats ${computerChoice}`;
+                humanScore++;
+            } else {
+                message = `You lose! ${computerChoice} beats ${humanChoice}`;
+                computerScore++;
+            }
+            console.log(message);
+
+        }
+
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+        playRound(humanSelection, computerSelection);
+
     </script>
 </html>
