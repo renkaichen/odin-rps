@@ -5,8 +5,7 @@
     </head>
 
     <script>
-        let humanScore = 0;
-        let computerScore = 0;
+        
         function getComputerChoice() {
             let choice = Math.floor(Math.random() * 3);
             switch(choice) {
@@ -23,13 +22,18 @@
             return prompt("Rock, paper, or scissors?").toLowerCase();
         }
 
-        function playRound(humanChoice, computerChoice) {
-            let winMessage;
+        function playGame() {
+            let humanScore = 0;
+            let computerScore = 0;
+
+            function playRound(humanChoice, computerChoice) {
+            let message;
+            let won = false;
             switch(computerChoice) {
                 case "rock":
                     switch(humanChoice) {
                         case "rock":
-                            console.log("It's a tie! {humanChoice} ties with {computerChoice}");
+                            console.log(`It\'s a tie! ${humanChoice} ties with ${computerChoice}`);
                             return;
                         case "scissors": 
                             won = false;
@@ -38,6 +42,7 @@
                             won = true;
                             break;
                     }
+                    break;
                 case "paper":
                     switch(humanChoice) {
                         case "rock":
@@ -50,6 +55,7 @@
                             console.log(`It's a tie! ${humanChoice} ties with ${computerChoice}`);
                             return;
                     }
+                    break;
                 case "scissors":
                     switch(humanChoice) {
                         case "rock":
@@ -62,6 +68,7 @@
                             won = false;
                             break;
                     }
+                    break;
             }   
             if (won) {
                 message = `You win! ${humanChoice} beats ${computerChoice}`;
@@ -74,10 +81,23 @@
 
         }
 
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+        for (let i = 0; i < 5; i++) {
+            const humanSelection = getHumanChoice();
+            const computerSelection = getComputerChoice();
+            playRound(humanSelection, computerSelection);
+            console.log(`You: ${humanScore} Computer: ${computerScore}`)
+        }
 
-        playRound(humanSelection, computerSelection);
+        if(computerScore > humanScore) {
+            console.log("Computer Wins!");
+        } else if (humanScore > computerScore) {
+            console.log("You Win!");
+        } else {
+            console.log("It's a tie!");
+        }
+        }
+
+        playGame();
 
     </script>
 </html>
