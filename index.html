@@ -4,6 +4,13 @@
         <meta charset="UTF-8">
     </head>
 
+    <body>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+        <div id="results"></div>
+    </body>
+
     <script>
         
         function getComputerChoice() {
@@ -22,18 +29,17 @@
             return prompt("Rock, paper, or scissors?").toLowerCase();
         }
 
-        function playGame() {
-            let humanScore = 0;
-            let computerScore = 0;
+        let humanScore = 0;
+        let computerScore = 0;
 
-            function playRound(humanChoice, computerChoice) {
-            let message;
+        function playRound(humanChoice, computerChoice) {
+            let message = `It\'s a tie! ${humanChoice} ties with ${computerChoice}`;
             let won = false;
             switch(computerChoice) {
                 case "rock":
                     switch(humanChoice) {
                         case "rock":
-                            console.log(`It\'s a tie! ${humanChoice} ties with ${computerChoice}`);
+                            addResult(message);
                             return;
                         case "scissors": 
                             won = false;
@@ -52,7 +58,7 @@
                             won = true;
                             break;
                         case "paper":
-                            console.log(`It's a tie! ${humanChoice} ties with ${computerChoice}`);
+                            addResult(message);
                             return;
                     }
                     break;
@@ -62,7 +68,7 @@
                             won = true;
                             break;
                         case "scissors": 
-                            console.log(`It's a tie! ${humanChoice} ties with ${computerChoice}`);
+                            addResult(message);
                             return;
                         case "paper":
                             won = false;
@@ -77,27 +83,40 @@
                 message = `You lose! ${computerChoice} beats ${humanChoice}`;
                 computerScore++;
             }
-            console.log(message);
-
+            addResult(message);           
         }
 
-        for (let i = 0; i < 5; i++) {
-            const humanSelection = getHumanChoice();
-            const computerSelection = getComputerChoice();
-            playRound(humanSelection, computerSelection);
-            console.log(`You: ${humanScore} Computer: ${computerScore}`)
-        }
+        const rockButton = document.querySelector("#rock");
+        rockButton.addEventListener('click', () => {
+            playRound("rock", getComputerChoice());
+        });
 
-        if(computerScore > humanScore) {
-            console.log("Computer Wins!");
-        } else if (humanScore > computerScore) {
-            console.log("You Win!");
-        } else {
-            console.log("It's a tie!");
-        }
-        }
+        const paperButton = document.querySelector("#paper");
+        paperButton.addEventListener('click', () => {
+            playRound("paper", getComputerChoice());
+        });
 
-        playGame();
+        const scissorsButton = document.querySelector("#scissors");
+        scissorsButton.addEventListener('click', () => {
+            playRound("scissors", getComputerChoice());
+        });
+
+        function addResult(message) {
+            const resultList = document.querySelector("#results");
+            const result = document.createElement("p");
+            const score = document.createElement("p");
+            result.textContent = message;
+            if (humanScore == 5) {
+                score.textContent = "You win!"
+            } else if (computerScore == 5) {
+                score.textContent = "Computer Wins!"
+            } else {
+                score.textContent = `You: ${humanScore} Computer: ${computerScore}`;
+            }
+
+            resultList.appendChild(result);
+            resultList.appendChild(score);
+        }
 
     </script>
 </html>
